@@ -1,0 +1,125 @@
+.svc {
+  background: var(--navy2);
+  position: relative;
+  overflow: hidden;
+}
+
+.svc::before {
+  content: '';
+  position: absolute;
+  top: 50%; right: -100px;
+  transform: translateY(-50%);
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(43,43,181,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.svc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.svc-head h2 {
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+}
+
+.svc-head p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 320px;
+  text-align: right;
+}
+
+/* ── Row-based services ── */
+.svc-list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.svc-row {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr 1.8fr 2rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.8rem 0;
+  border-top: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  position: relative;
+}
+
+.svc-row:last-child {
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* Animated glow line on hover */
+.svc-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--orange), var(--blue));
+  transform: scaleY(0);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: bottom;
+}
+
+.svc-row:hover::before {
+  transform: scaleY(1);
+  box-shadow: 0 0 15px var(--orange);
+}
+
+.svc-row:hover {
+  padding-left: 1.5rem;
+  background: linear-gradient(90deg, rgba(43,43,181,0.08) 0%, rgba(232,101,10,0.04) 60%, transparent 100%);
+}
+
+.svc-row:hover .svc-name   { color: var(--white); text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+.svc-row:hover .svc-arrow  { opacity: 1; transform: translateX(0); color: var(--orange); }
+.svc-row:hover .svc-idx    { color: var(--orange); text-shadow: 0 0 10px rgba(232,101,10,0.5); }
+
+.svc-idx {
+  font-family: 'Square721', sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  transition: all 0.3s;
+}
+
+.svc-name {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.svc-desc {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.svc-arrow {
+  font-size: 1.2rem;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .svc-head { flex-direction: column; align-items: flex-start; }
+  .svc-head p { text-align: left; }
+  .svc-row { grid-template-columns: 2.5rem 1fr; gap: 0.5rem; }
+  .svc-desc { grid-column: 1 / -1; }
+  .svc-arrow { display: none; }
+}
