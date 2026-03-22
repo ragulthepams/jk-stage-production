@@ -1,37 +1,49 @@
-import useReveal from '../hooks/useReveal'
+import { motion } from 'framer-motion'
 import './Services.css'
 
 const services = [
-  { title: 'Truss Systems',          sub: 'Aluminum & steel truss for lighting, audio & stage support' },
-  { title: 'Roofing Structures',     sub: 'Weather-resistant covering systems for outdoor events' },
-  { title: 'Stage Construction',     sub: 'Custom & modular stages for concerts, launches & corporate' },
-  { title: 'Scaffolding Solutions',  sub: 'Industrial-grade scaffolding with safety compliance' },
-  { title: 'Event Fabrication',      sub: 'Custom builds — frames, panels, branded structures' },
-  { title: 'Launch & Unveil Setups', sub: 'Precision setups for product reveals & activations' },
+  { title: 'Roofing Truss & Stage',  sub: 'Engineered heavy-duty roofing and custom staging systems' },
+  { title: 'Layer Stage',            sub: 'Premium modular layer stages built for scale and stability' },
+  { title: 'Layer Scaffolding',      sub: 'Multi-level layer scaffolding for complex structural setups' },
+  { title: 'Scaffolding Systems',    sub: 'Industrial-grade scaffolding with strict safety compliance' },
+  { title: 'Hydraulic Lifts',        sub: 'Precision mechanical lifts for dynamic reveals and staging' },
+  { title: 'Custom Fabrication',     sub: 'Bespoke event infrastructure, framing, and branded build-outs' },
 ]
 
 export default function Services() {
-  const ref = useReveal()
-
   return (
     <section id="services" className="section svc">
       <div className="container">
-        <div className="svc-head">
+        <motion.div
+          className="svc-head"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
           <div>
             <span className="eyebrow">Services</span>
             <h2>What We<br />Build.</h2>
           </div>
           <p>End-to-end event infrastructure — from structural design to on-ground execution.</p>
-        </div>
+        </motion.div>
 
-        <div ref={ref} className="svc-list stagger">
+        <div className="svc-list">
           {services.map((s, i) => (
-            <a key={i} className="svc-row" href="#contact">
+            <motion.a
+              key={i}
+              className="svc-row"
+              href="#contact"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: '-50px' }}
+            >
               <span className="svc-idx">0{i + 1}</span>
               <h3 className="svc-name">{s.title}</h3>
               <p className="svc-desc">{s.sub}</p>
               <span className="svc-arrow">→</span>
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>

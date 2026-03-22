@@ -1,4 +1,4 @@
-import useReveal from '../hooks/useReveal'
+import { motion } from 'framer-motion'
 import useCountUp from '../hooks/useCountUp'
 import './About.css'
 
@@ -12,15 +12,25 @@ function AnimStat({ n, label, suffix = '+' }) {
   )
 }
 
-export default function About() {
-  const ref = useReveal()
+const blocks = [
+  { idx: '01', label: 'Vision', text: 'To be the most trusted name in event infrastructure — known for precision, safety & scale.' },
+  { idx: '02', label: 'Mission', text: 'Deliver technically sound, visually impactful event setups that bring every vision to life.' },
+  { idx: '03', label: 'Approach', text: 'From blueprint to breakdown — we own every phase of the build with zero compromise on quality.' },
+]
 
+export default function About() {
   return (
     <section id="about" className="section about">
       <div className="container">
         <div className="about-inner">
 
-          <div className="about-left">
+          <motion.div
+            className="about-left"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: '-80px' }}
+          >
             <span className="eyebrow">About Us</span>
             <h2 className="about-title">
               Two Decades of<br />Delivering the Stage.
@@ -36,41 +46,42 @@ export default function About() {
               dedicated team that brings engineering precision and creative excellence
               to every project.
             </p>
-            <a href="#contact" className="btn btn-primary btn-magnetic" style={{ marginTop: '1.5rem' }}>
+            <a href="#contact" className="btn btn-primary" style={{ marginTop: '1.5rem' }}>
               Work With Us
             </a>
-          </div>
+          </motion.div>
 
           <div className="about-right">
-            <div ref={ref} className="about-blocks stagger">
-              <div className="about-block">
-                <span className="about-block-idx">01</span>
-                <div>
-                  <span className="about-block-label">Vision</span>
-                  <p>To be the most trusted name in event infrastructure — known for precision, safety & scale.</p>
-                </div>
-              </div>
-              <div className="about-block">
-                <span className="about-block-idx">02</span>
-                <div>
-                  <span className="about-block-label">Mission</span>
-                  <p>Deliver technically sound, visually impactful event setups that bring every vision to life.</p>
-                </div>
-              </div>
-              <div className="about-block">
-                <span className="about-block-idx">03</span>
-                <div>
-                  <span className="about-block-label">Approach</span>
-                  <p>From blueprint to breakdown — we own every phase of the build with zero compromise on quality.</p>
-                </div>
-              </div>
+            <div className="about-blocks">
+              {blocks.map((b, i) => (
+                <motion.div
+                  key={b.idx}
+                  className="about-block"
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  viewport={{ once: true, margin: '-50px' }}
+                >
+                  <span className="about-block-idx">{b.idx}</span>
+                  <div>
+                    <span className="about-block-label">{b.label}</span>
+                    <p>{b.text}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
-            <div className="about-stats">
+            <motion.div
+              className="about-stats"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: '-50px' }}
+            >
               <AnimStat n="200" label="Events Delivered" />
               <AnimStat n="10" label="Cities Covered" />
               <AnimStat n="20" label="Years Active" />
-            </div>
+            </motion.div>
           </div>
 
         </div>

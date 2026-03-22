@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import useCountUp from '../hooks/useCountUp'
-import useTilt from '../hooks/useTilt'
 import './Portfolio.css'
 
 // ── Dynamic import of all portfolio images ──
@@ -94,9 +94,7 @@ function EventCard({ ev, index, onOpenLightbox }) {
   const progressRef = useRef(null)
   const cardRef = useRef(null)
   const len = ev.photos.length
-  const tilt = useTilt(6)
 
-  // Individual card reveal
   useEffect(() => {
     const el = cardRef.current
     if (!el) return
@@ -115,7 +113,6 @@ function EventCard({ ev, index, onOpenLightbox }) {
 
   const startTimer = useCallback(() => {
     clearInterval(timerRef.current)
-    // restart progress animation
     if (progressRef.current) {
       progressRef.current.style.transition = 'none'
       progressRef.current.style.width = '0%'
@@ -139,7 +136,6 @@ function EventCard({ ev, index, onOpenLightbox }) {
   }, [startTimer])
 
   useEffect(() => {
-    // reset progress on slide change
     if (progressRef.current) {
       progressRef.current.style.transition = 'none'
       progressRef.current.style.width = '0%'
@@ -160,8 +156,7 @@ function EventCard({ ev, index, onOpenLightbox }) {
   }
 
   return (
-    <div ref={cardRef} className={`port-card${visible ? ' port-card-visible' : ''}`} {...tilt} style={{ transition: 'transform 0.15s ease-out' }}>
-      <div className="port-card-glow" />
+    <div ref={cardRef} className={`port-card${visible ? ' port-card-visible' : ''}`}>
       <div
         className="port-card-slider"
         onClick={() => onOpenLightbox(ev.photos, cur)}
@@ -181,13 +176,11 @@ function EventCard({ ev, index, onOpenLightbox }) {
             <button className="port-card-arr port-card-arr-r" onClick={(e) => { e.stopPropagation(); go(1) }} aria-label="Next">&#8250;</button>
           </>
         )}
-        {/* Progress bar */}
         {len > 1 && (
           <div className="port-card-progress">
             <div ref={progressRef} className="port-card-progress-bar" />
           </div>
         )}
-        {/* Photo count badge */}
         <span className="port-card-count">{cur + 1} / {len}</span>
       </div>
       <div className="port-card-info">
@@ -218,8 +211,22 @@ function Lightbox({ photos, startIdx, onClose }) {
   }, [len, onClose])
 
   return (
-    <div className="lightbox" onClick={onClose}>
-      <div className="lightbox-content" onClick={e => e.stopPropagation()}>
+    <motion.div
+      className="lightbox"
+      onClick={onClose}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+    >
+      <motion.div
+        className="lightbox-content"
+        onClick={e => e.stopPropagation()}
+        initial={{ scale: 0.92, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.92, opacity: 0 }}
+        transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+      >
         <img src={photos[idx]} alt="" className="lightbox-img" />
         {len > 1 && (
           <>
@@ -228,9 +235,9 @@ function Lightbox({ photos, startIdx, onClose }) {
           </>
         )}
         <span className="lightbox-counter">{idx + 1} / {len}</span>
-      </div>
+      </motion.div>
       <button className="lightbox-close" onClick={onClose}>&#10005;</button>
-    </div>
+    </motion.div>
   )
 }
 
@@ -243,17 +250,26 @@ export default function Portfolio() {
   return (
     <section id="portfolio" className="section port">
       <div className="container">
-
-        {/* ── Heading ── */}
-        <div className="port-head">
+        <motion.div
+          className="port-head"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
           <div>
             <span className="eyebrow">Our Work</span>
             <h2 className="port-title">Built on Every Stage.</h2>
           </div>
-        </div>
+        </motion.div>
 
-        {/* ── Company intro + stats ── */}
-        <div className="port-intro">
+        <motion.div
+          className="port-intro"
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-50px' }}
+        >
           <div className="port-intro-text">
             <p>
               JK Stage Production specialises in full-scale event infrastructure — from ground up.
@@ -273,10 +289,15 @@ export default function Portfolio() {
             <AnimStat n="100" label="Satisfied Clients" />
             <AnimStat n="10" label="Cities Across South India" />
           </div>
-        </div>
+        </motion.div>
 
-        {/* ── Gallery filter tabs ── */}
-        <div className="port-gallery-head">
+        <motion.div
+          className="port-gallery-head"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-50px' }}
+        >
           <span className="eyebrow">Gallery</span>
           <div className="port-filters">
             {cats.map(c => (
@@ -289,9 +310,8 @@ export default function Portfolio() {
               </button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* ── Event cards grid ── */}
         <div className="port-grid">
           {filtered.map((ev, i) => (
             <EventCard
@@ -302,17 +322,17 @@ export default function Portfolio() {
             />
           ))}
         </div>
-
       </div>
 
-      {/* ── Lightbox ── */}
-      {lightbox && (
-        <Lightbox
-          photos={lightbox.photos}
-          startIdx={lightbox.idx}
-          onClose={() => setLightbox(null)}
-        />
-      )}
+      <AnimatePresence>
+        {lightbox && (
+          <Lightbox
+            photos={lightbox.photos}
+            startIdx={lightbox.idx}
+            onClose={() => setLightbox(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   )
 }

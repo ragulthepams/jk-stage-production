@@ -1,4 +1,4 @@
-import useReveal from '../hooks/useReveal'
+import { motion } from 'framer-motion'
 import './Process.css'
 
 const steps = [
@@ -35,27 +35,38 @@ const steps = [
 ]
 
 export default function Process() {
-  const ref = useReveal()
-
   return (
     <section className="section process">
       <div className="container">
-        <div className="process-head">
+        <motion.div
+          className="process-head"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
           <div>
             <span className="eyebrow">How We Work</span>
             <h2 className="process-title">From Blueprint<br />to Breakdown.</h2>
           </div>
           <p>Every project follows a proven six-phase process — ensuring precision, safety, and zero surprises on event day.</p>
-        </div>
+        </motion.div>
 
-        <div ref={ref} className="process-grid stagger">
-          {steps.map((s) => (
-            <div key={s.num} className="process-card">
+        <div className="process-grid">
+          {steps.map((s, i) => (
+            <motion.div
+              key={s.num}
+              className="process-card"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: '-50px' }}
+            >
               <div className="process-card-line" />
               <span className="process-card-num">{s.num}</span>
               <h3 className="process-card-title">{s.title}</h3>
               <p className="process-card-desc">{s.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

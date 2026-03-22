@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useReveal from '../hooks/useReveal'
+import { motion } from 'framer-motion'
 import './Contact.css'
 
 const FB_ICON = (
@@ -19,7 +19,6 @@ export default function Contact() {
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
   const change = e => setForm({ ...form, [e.target.name]: e.target.value })
-  const ref = useReveal()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -45,9 +44,15 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section contact">
-      <div ref={ref} className="container contact-inner reveal">
+      <div className="container contact-inner">
 
-        <div className="contact-left">
+        <motion.div
+          className="contact-left"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
           <span className="eyebrow">Get In Touch</span>
           <h2 className="contact-title">Let's Build<br />Something Great.</h2>
           <p>Tell us about your event and we'll get back to you within 24 hours.</p>
@@ -70,9 +75,15 @@ export default function Contact() {
               <span>Instagram</span>
             </a>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="contact-right">
+        <motion.div
+          className="contact-right"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-80px' }}
+        >
           {sent ? (
             <div className="contact-ok">
               <div className="ok-check">&#10003;</div>
@@ -117,7 +128,7 @@ export default function Contact() {
               </button>
             </form>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

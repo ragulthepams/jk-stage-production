@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import logo from '../assets/logo.png'
 import './Footer.css'
 
@@ -5,7 +6,13 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-top">
+        <motion.div
+          className="footer-top"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true }}
+        >
           <div className="footer-brand">
             <a href="#hero" className="footer-logo-row">
               <img src={logo} alt="JK Stage Production" className="footer-logo" />
@@ -20,7 +27,7 @@ export default function Footer() {
               <a key={l} href={`#${l.toLowerCase()}`}>{l}</a>
             ))}
           </div>
-        </div>
+        </motion.div>
         <div className="footer-divider" />
         <div className="footer-bottom">
           <span>&copy; {new Date().getFullYear()} JK Stage Production. All rights reserved.</span>

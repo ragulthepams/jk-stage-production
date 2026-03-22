@@ -4,13 +4,24 @@
   overflow: hidden;
 }
 
+/* Ambient glows */
 .about::before {
   content: '';
   position: absolute;
   bottom: -200px; left: -200px;
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(43,43,181,0.1) 0%, transparent 70%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(43,43,181,0.12) 0%, transparent 65%);
   filter: blur(60px);
+  pointer-events: none;
+}
+
+.about::after {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(232,101,10,0.06) 0%, transparent 65%);
+  filter: blur(50px);
   pointer-events: none;
 }
 
@@ -24,46 +35,47 @@
 }
 
 .about-title {
-  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   line-height: 1.05;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
 }
 
 .about-left p {
   font-size: 0.92rem;
-  line-height: 1.85;
+  line-height: 1.9;
   color: var(--muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.8rem;
 }
 
 /* ── Vision / Mission blocks ── */
 .about-blocks {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: 0.8rem;
+  margin-bottom: 1.8rem;
 }
 
 .about-block {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
   backdrop-filter: blur(16px);
-  padding: 1.4rem 1.6rem;
+  border-radius: var(--radius);
+  padding: 1.5rem 1.8rem;
   display: flex;
   gap: 1.2rem;
   align-items: flex-start;
-  border-left: 2px solid var(--orange);
+  border-left: 3px solid var(--orange);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 }
 
-/* Animated glow on hover */
+/* Glow on hover */
 .about-block::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(43,43,181,0.06) 0%, transparent 60%);
+  background: linear-gradient(90deg, rgba(232,101,10,0.04) 0%, rgba(43,43,181,0.03) 50%, transparent 100%);
   opacity: 0;
   transition: opacity 0.4s;
 }
@@ -71,17 +83,17 @@
 .about-block:hover::before { opacity: 1; }
 
 .about-block:hover {
-  transform: translateX(8px);
-  box-shadow: -4px 0 30px rgba(43,43,181,0.15), 0 4px 20px rgba(0,0,0,0.2);
-  border-left-color: var(--blue-l);
-  border-left-width: 3px;
+  transform: translateX(6px);
+  box-shadow: -4px 0 35px rgba(232,101,10,0.1), 0 8px 30px rgba(0,0,0,0.25);
+  border-left-color: var(--orange-l);
+  background: rgba(255,255,255,0.035);
 }
 
 .about-block-idx {
   font-family: 'Square721', sans-serif;
   font-size: 0.72rem;
   letter-spacing: 0.15em;
-  color: var(--muted);
+  color: rgba(255,255,255,0.2);
   transition: all 0.3s;
   flex-shrink: 0;
   padding-top: 0.2rem;
@@ -90,7 +102,7 @@
 
 .about-block:hover .about-block-idx {
   color: var(--orange);
-  text-shadow: 0 0 10px rgba(232,101,10,0.5);
+  text-shadow: 0 0 12px rgba(232,101,10,0.5);
 }
 
 .about-block-label {
@@ -107,7 +119,7 @@
 
 .about-block p {
   font-size: 0.87rem;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--muted);
   position: relative;
 }
@@ -117,8 +129,9 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
   position: relative;
   overflow: hidden;
 }
@@ -127,14 +140,14 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(43,43,181,0.04) 0%, rgba(232,101,10,0.04) 100%);
+  background: linear-gradient(135deg, rgba(43,43,181,0.04) 0%, rgba(232,101,10,0.03) 100%);
   pointer-events: none;
 }
 
 .about-stat {
-  padding: 1.5rem;
+  padding: 1.6rem;
   text-align: center;
-  border-right: 1px solid var(--glass-border);
+  border-right: 1px solid rgba(255,255,255,0.06);
   position: relative;
   transition: background 0.3s;
 }
@@ -149,12 +162,15 @@
 
 .about-stat-n {
   font-family: 'Square721', sans-serif;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 700;
-  color: var(--orange);
+  background: linear-gradient(135deg, var(--orange), var(--orange-l));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1;
   display: block;
-  text-shadow: 0 0 20px rgba(232,101,10,0.3);
+  filter: drop-shadow(0 0 15px rgba(232,101,10,0.25));
 }
 
 .about-stat-l {
@@ -163,7 +179,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-top: 0.3rem;
+  margin-top: 0.35rem;
   display: block;
 }
 

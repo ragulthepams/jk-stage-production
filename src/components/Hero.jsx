@@ -1,97 +1,88 @@
-import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import useCountUp from '../hooks/useCountUp'
+import Hero3DScene from './Hero3DScene'
 import './Hero.css'
 
-function AnimStat({ n, label, suffix = '+' }) {
+const fadeUp = (delay = 0) => ({
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1, y: 0,
+    transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
+  },
+})
+
+function AnimStat({ n, label, suffix = '+', delay }) {
   const { ref, count } = useCountUp(n, 2200)
   return (
-    <div ref={ref} className="hero-num">
+    <motion.div ref={ref} className="hero-num" variants={fadeUp(delay)}>
       <span className="hero-num-val">{count}{suffix}</span>
       <span className="hero-num-lab">{label}</span>
-    </div>
+    </motion.div>
   )
 }
 
 export default function Hero() {
-  const heroRef = useRef(null)
-  const [mouse, setMouse] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2
-      const y = (e.clientY / window.innerHeight - 0.5) * 2
-      setMouse({ x, y })
-    }
-    window.addEventListener('mousemove', handleMove)
-    return () => window.removeEventListener('mousemove', handleMove)
-  }, [])
-
   return (
-    <section id="hero" className="hero" ref={heroRef}>
-      {/* Animated grid background */}
-      <div className="hero-grid" />
+    <section id="hero" className="hero">
+      {/* Ambient glow blobs */}
+      <div className="hero-blob hero-blob-1" />
+      <div className="hero-blob hero-blob-2" />
 
-      {/* Floating 3D shapes */}
-      <div className="hero-shapes">
-        <div
-          className="hero-shape hero-shape-1"
-          style={{ transform: `translate(${mouse.x * 20}px, ${mouse.y * 15}px)` }}
-        />
-        <div
-          className="hero-shape hero-shape-2"
-          style={{ transform: `translate(${mouse.x * -15}px, ${mouse.y * -10}px)` }}
-        />
-        <div
-          className="hero-shape hero-shape-3"
-          style={{ transform: `translate(${mouse.x * 10}px, ${mouse.y * -20}px) rotate(${mouse.x * 15}deg)` }}
-        />
-      </div>
+      {/* 3D R3F Background */}
+      <Hero3DScene />
 
-      <div className="hero-inner container">
+      <motion.div
+        className="hero-inner container"
+        initial="hidden"
+        animate="visible"
+      >
         <div className="hero-left">
-          <div className="hero-tag">
+          <motion.div className="hero-tag" variants={fadeUp(0.2)}>
             <div className="accent-line" />
             <span>Event Infrastructure</span>
-          </div>
-          <h1>
+          </motion.div>
+
+          <motion.h1 variants={fadeUp(0.35)}>
             We Engineer<br />
             <span className="hero-highlight">Iconic</span> Stages.
-          </h1>
-          <p>
-            Full-scale stage construction, truss systems, roofing & custom fabrication.
-            Concept to completion.
-          </p>
-          <div className="hero-btns">
-            <a href="#contact" className="btn btn-primary btn-magnetic">Get a Quote</a>
-            <a href="#portfolio" className="btn btn-outline btn-magnetic">Our Work →</a>
-          </div>
+          </motion.h1>
+
+          <motion.p variants={fadeUp(0.5)}>
+            Full-scale event infrastructure spanning premium roofing truss systems, layer stages, 
+            advanced scaffolding, and hydraulic mechanical setups. Built with strict safety and precision.
+          </motion.p>
+
+          <motion.div className="hero-btns" variants={fadeUp(0.65)}>
+            <a href="#contact" className="btn btn-primary">Get a Quote</a>
+            <a href="#portfolio" className="btn btn-outline">Our Work →</a>
+          </motion.div>
         </div>
 
         <div className="hero-right">
-          <div className="hero-numbers">
-            <AnimStat n="200" label="Events" />
-            <AnimStat n="20" label="Years" />
-            <AnimStat n="10" label="Cities" />
-          </div>
+          <motion.div className="hero-numbers" initial="hidden" animate="visible">
+            <AnimStat n="200" label="Events Delivered" delay={0.6} />
+            <AnimStat n="20" label="Years of Excellence" delay={0.75} />
+            <AnimStat n="10" label="Cities Covered" delay={0.9} />
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom ticker */}
       <div className="hero-ticker">
         <div className="ticker-track">
-          {Array(3).fill(null).map((_, i) => (
+          {Array(4).fill(null).map((_, i) => (
             <div key={i} className="ticker-set">
-              <span>Stage Construction</span>
+              <span>Roofing Truss & Stage</span>
               <span className="ticker-dot" />
-              <span>Truss Systems</span>
+              <span>Layer Stage</span>
               <span className="ticker-dot" />
-              <span>Roofing Structures</span>
+              <span>Layer Scaffolding</span>
               <span className="ticker-dot" />
-              <span>Scaffolding</span>
+              <span>Hydraulic Lifts</span>
+              <span className="ticker-dot" />
+              <span>Scaffolding Systems</span>
               <span className="ticker-dot" />
               <span>Custom Fabrication</span>
-              <span className="ticker-dot" />
-              <span>Launch Setups</span>
               <span className="ticker-dot" />
             </div>
           ))}
