@@ -213,4 +213,11 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 768px) {
   .container { padding: 0 1.5rem; }
   .section { padding: 5rem 0; }
+  
+  /* Ensure buttons don't get cropped on very small phones like iPhone SE */
+  .btn {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.7rem;
+    width: 100%; /* Force full width on small screens for neat stacking */
+  }
 }

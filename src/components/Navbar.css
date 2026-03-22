@@ -127,20 +127,23 @@
 
 @media (max-width: 768px) {
   .nav { width: 95%; top: 1rem; border-radius: 30px; }
-  .nav-bar { padding: 0.8rem 1.5rem; }
+  .nav-bar { padding: 0.8rem 1.5rem; position: relative; z-index: 101; }
   .nav--scrolled .nav-bar { padding: 0.6rem 1.5rem; }
-  .nav-toggle { display: flex; }
+  .nav-toggle { display: flex; position: relative; z-index: 102; }
   .nav-menu {
     display: none;
     position: fixed;
     inset: 0;
-    background: #0a0a1e;
+    background: rgba(6, 6, 18, 0.98);
+    backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
-    z-index: -1;
+    z-index: 100;
     border-radius: 0;
+    margin: 0;
+    padding: 0;
   }
   .nav-menu--open { display: flex; }
   .nav-menu a { font-size: 1rem; color: #fff; }
