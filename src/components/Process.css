@@ -1,0 +1,140 @@
+.process {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+
+.process::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(232,101,10,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.process-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 3rem;
+  margin-bottom: 4rem;
+  position: relative;
+  z-index: 1;
+}
+
+.process-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+}
+
+.process-head p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 340px;
+  text-align: right;
+}
+
+/* ── Cards grid ── */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.process-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  padding: 2rem 1.8rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Top accent line */
+.process-card-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange), var(--blue));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.process-card:hover .process-card-line {
+  transform: scaleX(1);
+}
+
+.process-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px rgba(232,101,10,0.05);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* Glow on hover */
+.process-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(232,101,10,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.process-card:hover::before { opacity: 1; }
+
+.process-card-num {
+  font-family: 'Square721', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  display: block;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.process-card:hover .process-card-num {
+  color: rgba(232,101,10,0.15);
+}
+
+.process-card-title {
+  font-family: 'Square721', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.03em;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.process-card:hover .process-card-title {
+  color: var(--orange);
+}
+
+.process-card-desc {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--muted);
+  position: relative;
+}
+
+@media (max-width: 860px) {
+  .process-head { flex-direction: column; align-items: flex-start; }
+  .process-head p { text-align: left; }
+  .process-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .process-grid { grid-template-columns: 1fr; }
+}

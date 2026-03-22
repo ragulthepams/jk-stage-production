@@ -4,7 +4,7 @@ import useTilt from '../hooks/useTilt'
 import './Portfolio.css'
 
 // ── Dynamic import of all portfolio images ──
-const allPhotos = import.meta.glob('../assets/portfolio/*.jpg', { eager: true })
+const allPhotos = import.meta.glob('../assets/portfolio/*.webp', { eager: true })
 
 function getPhotos(...patterns) {
   return Object.entries(allPhotos)
