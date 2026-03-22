@@ -292,9 +292,13 @@
 }
 
 @media (max-width: 860px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .hero-numbers { flex-direction: row; border-left: none; padding-left: 0; border-top: 1px solid var(--glass-border); padding-top: 1.5rem; gap: 2rem; }
-  .hero-num { padding: 0; border-bottom: none; border-right: 1px solid var(--glass-border); padding-right: 2rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 2rem; padding-top: 7rem; padding-bottom: 2rem; }
+  .hero h1 { font-size: clamp(2.6rem, 8vw, 3.5rem); margin-bottom: 1rem; }
+  .hero p { font-size: 0.95rem; margin-bottom: 1.5rem; max-width: 100%; }
+  
+  .hero-numbers { flex-direction: row; border-left: none; padding-left: 0; border-top: 1px solid var(--glass-border); padding-top: 1.5rem; gap: 1.5rem; }
+  .hero-num { padding: 0; border-bottom: none; border-right: 1px solid var(--glass-border); padding-right: 1.5rem; }
+  .hero-num-val { font-size: 2.2rem; }
   .hero-num:last-child { border-right: none; padding-right: 0; }
   .hero-num::before { display: none; }
   .hero-shapes { display: none; }
